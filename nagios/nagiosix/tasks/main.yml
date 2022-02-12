@@ -1,0 +1,29 @@
+---
+# tasks file for nagiosix
+- name:  verify application processes are not running
+  shell: if ll /usr/local/nagios/bin/nagios | egrep 'nagios'|grep -v grep > /dev/null ;then echo 'process_running';else echo 'process_not_running';fi
+  ignore_errors: true
+  register: app_process_check
+
+ # this task is decision,play will fail/quit,if application is running
+- name: Unzip nagios
+  unarchive:
+    src: https://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
+    dest: /tmp
+    owner: root
+    group: root
+    remote_src: yes
+  when: app_process_check.stdout == "process_not_running"
+
+# installing script
+- name: running script
+  shell: "{{ item }}"
+  with_items:
+    - cd /tmp/nagiosxi
+
+- name: Upgrading Software
+  expect:
+    shell: ./fullinstall
+    responses:
+      'First Question in the prompt' : 'y'
+      'Second Question in the prompt' : 'y'

@@ -1,0 +1,13 @@
+#node1 ansible_host=192.168.2.78 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/final_ansible_role/useast1.pem
+#node2 ansible_host=192.168.3.226 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/final_ansible_role/useast1.pem
+#node3 ansible_host=192.168.3.40 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/final_ansible_role/useast1.pem
+
+bastion ansible_host=18.234.173.28 ansible_user=ubuntu ansible_ssh_private_key_file=/home/varghese/Downloads/NVirginia.pem
+
+[node]
+node1
+node2
+node3
+
+[bastion]
+bastion
